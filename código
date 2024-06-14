@@ -1,7 +1,9 @@
+/*CRIAÇÃO DO BANCO DE DADOS*/
 CREATE DATABASE `sistema_de_rh`;
 
 USE `sistema_de_rh`;
 
+/*CRIAÇÃO DE TABELAS*/
 CREATE TABLE `cargos` (
     id INT NOT NULL AUTO-INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -77,3 +79,5 @@ CREATE TABLE `folha_salarial` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (colaborador_id) REFERENCES colaboradores(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+/*INSERÇÃO DE DADOS NAS TABELAS*/
