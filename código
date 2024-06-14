@@ -1,1 +1,79 @@
+CREATE DATABASE `sistema_de_rh`;
 
+USE `sistema_de_rh`;
+
+CREATE TABLE `cargos` (
+    id INT NOT NULL AUTO-INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    descrição TEXT NOT NULL,
+
+    PRIMARY KEY (`id`)
+);
+    
+CREATE TABLE `candidatos` (
+    id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefone CHAR(11),
+    cpf CHAR(11) NOT NULL,
+    data_entrevista DATETIME NOT NULL,
+    qualificacoes TEXT,
+    cargos_id INT,
+
+    UNIQUE (`CPF`),
+    UNIQUE (`email`),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (cargos_id) REFERENCES cargos(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE `carga_horaria` (
+    id INT NOT NULL AUTO-INCREMENT,
+    date NOT NULL,
+    time NOT NULL,
+    cargos_id INT,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (cargos_id) REFERENCES cargos(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE `colaboradores` (
+    id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefone CHAR(11),
+    data_inicio DATETIME NOT NULL,
+
+    UNIQUE (`email`),
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `funcao_colaborador` (
+    id INT NOT NULL AUTO-INCREMENT,
+    cargos_id INT,
+    colaborador_id INT,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (cargos_id) REFERENCES cargos(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    FOREIGN KEY (colaborador_id) REFERENCES colaboradores(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE `beneficios` (
+    id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT NOT NULL,
+    colaborador_id INT,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (colaborador_id) REFERENCES colaboradores(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+CREATE TABLE `folha_salarial` (
+    id INT NOT NULL AUTO-INCREMENT,
+    descontos DECIMAL NOT NULL,
+    impostos DECIMAL NOT NULL,
+    time NOT NULL,
+    cargos_id INT,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (colaborador_id) REFERENCES colaboradores(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
