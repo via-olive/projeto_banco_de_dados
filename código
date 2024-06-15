@@ -6,8 +6,8 @@ USE `sistema_de_rh`;
 /*CRIAÇÃO DE TABELAS*/
 CREATE TABLE `cargos` (
     id INT NOT NULL AUTO-INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    descrição TEXT NOT NULL,
+    nome_do_cargo VARCHAR(100) NOT NULL,
+    descrição_do_cargo TEXT NOT NULL,
 
     PRIMARY KEY (`id`)
 );
@@ -19,7 +19,6 @@ CREATE TABLE `candidatos` (
     telefone CHAR(11),
     cpf CHAR(11) NOT NULL,
     data_entrevista DATETIME NOT NULL,
-    qualificacoes TEXT,
     cargos_id INT,
 
     UNIQUE (`CPF`),
@@ -30,8 +29,8 @@ CREATE TABLE `candidatos` (
 
 CREATE TABLE `carga_horaria` (
     id INT NOT NULL AUTO-INCREMENT,
-    date NOT NULL,
-    time NOT NULL,
+    datas DATE NOT NULL,
+    horas TIME NOT NULL,
     cargos_id INT,
 
     PRIMARY KEY (`id`),
@@ -61,8 +60,8 @@ CREATE TABLE `funcao_colaborador` (
 
 CREATE TABLE `beneficios` (
     id INT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    descricao TEXT NOT NULL,
+    nome_do_beneficio VARCHAR(100) NOT NULL,
+    descricao_do_beneficio TEXT NOT NULL,
     colaborador_id INT,
 
     PRIMARY KEY (`id`),
@@ -71,9 +70,9 @@ CREATE TABLE `beneficios` (
 
 CREATE TABLE `folha_salarial` (
     id INT NOT NULL AUTO-INCREMENT,
+    salario DECIMAL NOT NULL,
     descontos DECIMAL NOT NULL,
-    impostos DECIMAL NOT NULL,
-    time NOT NULL,
+    horas_mensais_registradas TIME NOT NULL,
     cargos_id INT,
 
     PRIMARY KEY (`id`),
@@ -81,3 +80,215 @@ CREATE TABLE `folha_salarial` (
 );
 
 /*INSERÇÃO DE DADOS NAS TABELAS*/
+
+    INSERT INTO `cargos` (`nome_do_cargo`, `descricao_do_cargo`)
+    VALUES ('Engenheiro de Software Sênior', 'Responsável por liderar o desenvolvimento de software e garantir a qualidade do código em projetos da empresa'),
+    ('Analista de Dados', 'Coleta, analisa e interpreta dados para ajudar a empresa a tomar decisões estratégicas baseadas em evidências'),
+    ('UX Designer', 'Cria interfaces intuitivas e agradáveis para os usuários para que atendam às necessidades e expectativas dos clientes'),
+    ('Especialista em Segurança da Informação', 'Protege os sistemas de informação da empresa contra ameaças internas e externas'),
+    ('Gerente de Projetos', 'Coordena equipes multidisciplinares para entregar projetos de tecnologia dentro do prazo'),
+    ('Engenheiro de DevOps', ' Automatiza processos de desenvolvimento, integração e entrega de software'),
+    ('Especialista em Machine Learning', 'Desenvolve algoritmos e modelos de machine learning para análise preditiva'),
+    ('Arquiteto de Soluções Cloud', 'Projeta e implementa soluções em nuvem, como AWS, Azure ou Google Cloud'),
+    ('Especialista em Blockchain, 'Desenvolve e implementa aplicações baseadas em blockchain'),
+    ('Engenheiro de Software Front-end', 'Desenvolve interfaces de usuário interativas e responsivas utilizando tecnologias como HTML, CSS, JavaScript '),
+    ('Engenheiro de Software Back-end', 'Desenvolve e mantém a lógica de negócio e a funcionalidade do servidor de aplicação'),
+    ('Analista de Qualidade de Software', 'Testa e valida o software desenvolvido para garantir que atenda aos requisitos de qualidade'),
+    ('Especialista em Big Data', 'Gerencia e analisa grandes volumes de dados estruturados e não estruturados'),
+    ('Analista de Segurança de Rede', 'Protege a infraestrutura de rede da empresa contra vulnerabilidades'),
+    ('Analista de Business Intelligence', 'Coleta, organiza e analisa dados de negócio para identificar tendências, padrões e oportunidades'),
+    ('Especialista em Realidade Virtual', 'Desenvolve experiências imersivas e interativas utilizando tecnologias de realidade virtual'),
+    ('Engenheiro de Infraestrutura de TI', 'Planeja, implementa e mantém a infraestrutura de TI da empresa, incluindo servidores, redes e sistemas de armazenamento'),
+    ('Especialista em Inteligência Artificial', 'Aplica técnicas de inteligência artificial e aprendizado de máquina para criar sistemas autônomos'),
+    ('Engenheiro de Software Mobile', 'Desenvolve aplicativos móveis para iOS e Android'),
+    ('Analista de Suporte Técnico', 'Presta suporte técnico aos usuários internos e externos da empresa);
+
+    INSERT INTO `candidatos` (nome, email, telefone, cpf, data_entrevista) 
+    VALUES ('João Silva', 'joao.silva@email.com', '11223344556', '12345678901', '2024-06-14 10:00:00'),
+    ('Maria Souza', 'maria.souza@email.com', '11987654321', '23456789012', '2024-06-15 09:30:00'),
+    ('Pedro Oliveira', 'pedro.oliveira@email.com', '11876543210', '34567890123', '2024-06-16 14:00:00'),
+    ('Ana Santos', 'ana.santos@email.com', '11432165498', '45678901234', '2024-06-17 11:15:00'),
+    ('Carlos Lima', 'carlos.lima@email.com', '11564827394', '56789012345', '2024-06-18 13:45:00'),
+    ('Mariana Costa', 'mariana.costa@email.com', '11394857621', '67890123456', '2024-06-19 08:00:00'),
+    ('José Almeida', 'jose.almeida@email.com', '11928374650', '78901234567', '2024-06-20 15:30:00'),
+    ('Amanda Pereira', 'amanda.pereira@email.com', '11456782394', '89012345678', '2024-06-21 10:45:00'),
+    ('Felipe Gonçalves', 'felipe.goncalves@email.com', '11567894321', '90123456789', '2024-06-22 12:00:00'),
+    ('Juliana Fernandes', 'juliana.fernandes@email.com', '11678903254', '01234567890', '2024-06-23 14:30:00'),
+    ('Rafaela Lima', 'rafaela.lima@email.com', '11789043219', '12345678901', '2024-06-24 09:00:00'),
+    ('Gustavo Santos', 'gustavo.santos@email.com', '11234569870', '23456789012', '2024-06-25 11:45:00'),
+    ('Carolina Oliveira', 'carolina.oliveira@email.com', '11876543987', '34567890123', '2024-06-26 16:15:00'),
+    ('Bruno Costa', 'bruno.costa@email.com', '11432169087', '45678901234', '2024-06-27 08:30:00'),
+    ('Larissa Almeida', 'larissa.almeida@email.com', '11928375689', '56789012345', '2024-06-28 13:00:00'),
+    ('Thiago Pereira', 'thiago.pereira@email.com', '11564823987', '67890123456', '2024-06-29 15:45:00'),
+    ('Patrícia Silva', 'patricia.silva@email.com', '11394857632', '78901234567', '2024-06-30 10:15:00'),
+    ('Rodrigo Gonçalves', 'rodrigo.goncalves@email.com', '11928376543', '89012345678', '2024-07-01 14:00:00'),
+    ('Fernanda Oliveira', 'fernanda.oliveira@email.com', '11456780987', '90123456789', '2024-07-02 11:30:00'),
+    ('Lucas Fernandes', 'lucas.fernandes@email.com', '11567893456', '01234567890', '2024-07-03 09:45:00');
+
+    INSERT INTO `carga_horaria` (datas, horas) 
+    VALUES ('2024-06-01', '08:00:00'),
+    ('2024-06-02', '09:30:00'),
+    ('2024-06-03', '10:45:00'),
+    ('2024-06-04', '11:15:00'),
+    ('2024-06-05', '13:00:00'),
+    ('2024-06-06', '14:30:00'),
+    ('2024-06-07', '15:45:00'),
+    ('2024-06-08', '08:30:00'),
+    ('2024-06-09', '09:00:00'),
+    ('2024-06-10', '10:15:00'),
+    ('2024-06-11', '12:00:00'),
+    ('2024-06-12', '14:00:00'),
+    ('2024-06-13', '16:00:00'),
+    ('2024-06-14', '08:45:00'),
+    ('2024-06-15', '11:30:00'),
+    ('2024-06-16', '13:45:00'),
+    ('2024-06-17', '15:00:00'),
+    ('2024-06-18', '09:45:00'),
+    ('2024-06-19', '12:30:00'),
+    ('2024-06-20', '14:45:00');
+
+    INSERT INTO `colaboradores` (nome, email, telefone, data_inicio) 
+    VALUES ('Luiza Silva', 'luiza.silva@email.com', '11987654321', '2023-01-15 08:00:00'),
+    ('Carlos Ferreira', 'carlos.ferreira@email.com', '11876543210', '2023-02-20 09:30:00'),
+    ('Fernanda Oliveira', 'fernanda.oliveira@email.com', '11765432109', '2023-03-10 10:45:00'),
+    ('Roberto Santos', 'roberto.santos@email.com', '11654321098', '2023-04-05 11:15:00'),
+    ('Camila Almeida', 'camila.almeida@email.com', '11543210987', '2023-05-12 13:00:00'),
+    ('Ricardo Lima', 'ricardo.lima@email.com', '11432109876', '2023-06-18 14:30:00'),
+    ('Isabela Pereira', 'isabela.pereira@email.com', '11321098765', '2023-07-21 15:45:00'),
+    ('Marcelo Fernandes', 'marcelo.fernandes@email.com', '11210987654', '2023-08-03 08:30:00'),
+    ('Paula Costa', 'paula.costa@email.com', '11987654321', '2023-09-14 09:00:00'),
+    ('Diego Oliveira', 'diego.oliveira@email.com', '11876543210', '2023-10-25 10:15:00'),
+    ('Silvia Santos', 'silvia.santos@email.com', '11765432109', '2023-11-08 12:00:00'),
+    ('Marcos Alves', 'marcos.alves@email.com', '11654321098', '2023-12-17 14:00:00'),
+    ('Larissa Souza', 'larissa.souza@email.com', '11543210987', '2024-01-22 16:00:00'),
+    ('Gabriel Ribeiro', 'gabriel.ribeiro@email.com', '11432109876', '2024-02-09 08:45:00'),
+    ('Patricia Gonçalves', 'patricia.goncalves@email.com', '11321098765', '2024-03-14 11:30:00'),
+    ('Lucas Martins', 'lucas.martins@email.com', '11210987654', '2024-04-30 13:45:00'),
+    ('Júlia Vieira', 'julia.vieira@email.com', '11987654321', '2024-05-05 15:00:00'),
+    ('Rodrigo Ferreira', 'rodrigo.ferreira@email.com', '11876543210', '2024-06-20 09:45:00'),
+    ('Vanessa Oliveira', 'vanessa.oliveira@email.com', '11765432109', '2024-07-01 12:30:00'),
+    ('Matheus Silva', 'matheus.silva@email.com', '11654321098', '2024-08-15 14:45:00');
+
+    INSERT INTO `beneficios` (nome_do_beneficio, descricao_do_beneficio) 
+    VALUES ('Vale-Transporte', 'Benefício obrigatório oferecido para custear despesas de deslocamento residência-trabalho e vice-versa.'),
+    ('Vale-Refeição', 'Benefício fornecido para subsidiar parcial ou integralmente as refeições dos funcionários durante o expediente.'),
+    ('Plano de Saúde', 'Benefício que proporciona acesso a serviços de assistência médica, hospitalar e odontológica.'),
+    ('Seguro de Vida', 'Benefício que oferece proteção financeira aos beneficiários do funcionário em caso de morte.'),
+    ('Auxílio-Creche', 'Benefício oferecido para ajudar no custeio de creches ou escolas infantis para filhos de funcionários.'),
+    ('Participação nos Lucros e Resultados (PLR)', 'Benefício que permite aos funcionários receber uma parcela dos lucros ou resultados alcançados pela empresa.'),
+    ('Férias Remuneradas', 'Benefício que garante ao funcionário o direito a um período de descanso anual remunerado.'),
+    ('Licença-Maternidade', 'Benefício que assegura à mulher grávida o direito a afastamento remunerado do trabalho antes e depois do parto.'),
+    ('Licença-Paternidade', 'Benefício que concede ao pai o direito a um período de afastamento remunerado após o nascimento do filho.'),
+    ('Auxílio-Doença', 'Benefício que garante remuneração ao funcionário afastado por motivo de doença ou acidente.'),
+    ('Aposentadoria', 'Benefício que permite ao funcionário deixar de trabalhar após alcançar as condições legais para receber um benefício mensal vitalício.'),
+    ('Assistência Jurídica', 'Benefício que oferece suporte legal aos funcionários em questões relacionadas ao trabalho ou pessoais.'),
+    ('Previdência Privada', 'Benefício opcional que permite ao funcionário contribuir para um fundo de investimento para complementar a aposentadoria.'),
+    ('Bolsa de Estudos', 'Benefício que apoia financeiramente funcionários interessados em continuar seus estudos ou se especializar.'),
+    ('Horário Flexível', 'Benefício que permite aos funcionários escolherem seus horários de trabalho dentro de certos limites estabelecidos pela empresa.'),
+    ('Home Office', 'Benefício que permite ao funcionário trabalhar de casa ou de locais alternativos, utilizando tecnologias de comunicação.'),
+    ('Auxílio-Alimentação', 'Benefício que complementa o salário com um valor para despesas com alimentação.'),
+    ('Treinamentos e Desenvolvimento', 'Benefício que oferece oportunidades de aprendizagem e crescimento profissional aos funcionários.'),
+    ('Sala de Jogos e Recreação', 'Benefício que proporciona um ambiente de descontração e lazer no local de trabalho.'),
+    ('Programa de Bem-Estar', 'Benefício que promove a saúde e o bem-estar dos funcionários com atividades físicas, mentais e sociais.');
+
+
+    INSERT INTO `folha_salarial` (salario, descontos, horas_mensais_registradas) 
+    VALUES (3500.00, 300.00, '160:00:00'),
+    (4200.00, 350.00, '168:30:00'),
+    (3800.00, 280.00, '155:45:00'),
+    (4500.00, 400.00, '175:15:00'),
+    (4000.00, 320.00, '160:30:00'),
+    (3700.00, 270.00, '150:00:00'),
+    (4800.00, 420.00, '180:00:00'),
+    (3600.00, 290.00, '156:30:00'),
+    (4300.00, 360.00, '165:45:00'),
+    (4100.00, 330.00, '170:15:00'),
+    (3900.00, 300.00, '158:00:00'),
+    (4700.00, 410.00, '178:30:00'),
+    (3400.00, 260.00, '145:45:00'),
+    (4600.00, 390.00, '172:15:00'),
+    (4200.00, 340.00, '175:30:00'),
+    (3800.00, 280.00, '160:00:00'),
+    (4000.00, 310.00, '165:15:00'),
+    (3700.00, 270.00, '155:30:00'),
+    (4500.00, 400.00, '180:00:00'),
+    (4300.00, 350.00, '170:45:00');
+
+/*CONSULTAS DOS DADOS*/
+
+    SELECT nome, email
+    FROM colaboradores;
+
+    SELECT nome_do_beneficio, descricao_do_beneficio
+    FROM beneficios
+    WHERE nome_do_beneficio LIKE 'V%';
+    
+    SELECT nome, email
+    FROM colaboradores
+    ORDER BY nome;
+
+    SELECT SUM(salario) AS total_salarios
+    FROM folha_salarial;
+
+    SELECT nome_do_beneficio, descricao_do_beneficio
+    FROM beneficios
+    WHERE descricao_do_beneficio LIKE '%saúde%';
+
+    SELECT nome_do_beneficio, descricao_do_beneficio
+    FROM beneficios
+    ORDER BY nome_do_beneficio;
+
+    SELECT AVG(TIME_TO_SEC(horas_mensais_registradas) / 3600) AS media_horas_mensais
+    FROM folha_salarial;
+
+    SELECT nome_do_beneficio, descricao_do_beneficio
+    FROM beneficios
+    ORDER BY LENGTH(descricao_do_beneficio);
+
+    SELECT AVG(descontos) AS media_descontos
+    FROM folha_salarial;
+    
+    SELECT nome_do_beneficio
+    FROM beneficios
+    WHERE descricao_do_beneficio IS NULL OR descricao_do_beneficio = '';
+
+    SELECT SUM(TIME_TO_SEC(horas_mensais_registradas) / 3600) AS total_horas_registradas
+    FROM folha_salarial;
+
+    SELECT nome_do_beneficio
+    FROM beneficios
+    ORDER BY LENGTH(nome_do_beneficio) DESC;
+
+    SELECT COUNT(*) AS total_funcionarios
+    FROM funcionarios;
+
+    SELECT nome_do_beneficio, descricao_do_beneficio
+    FROM beneficios
+    WHERE descricao_do_beneficio LIKE '%auxílio%';
+
+    SELECT COUNT(*) AS total_beneficios
+    FROM beneficios;
+
+    SELECT nome_do_beneficio, descricao_do_beneficio
+    FROM beneficios
+    ORDER BY nome_do_beneficio DESC;
+
+    SELECT nome
+    FROM funcionarios
+    WHERE LENGTH(nome) > 10;
+
+    SELECT nome_do_beneficio, descricao_do_beneficio
+    FROM beneficios
+    WHERE descricao_do_beneficio LIKE '%treinamento%';
+
+    SELECT nome_do_beneficio, descricao_do_beneficio
+    FROM beneficios
+    WHERE nome_do_beneficio REGEXP '^[aeiouAEIOU]' AND LENGTH(descricao_do_beneficio) > 100;
+
+    SELECT nome
+    FROM funcionarios
+    WHERE nome LIKE 'J%' OR nome LIKE 'M%';
+
+    SELECT SUM(TIME_TO_SEC(horas_mensais_registradas) / 3600) AS total_horas_registradas
+    FROM folha_salarial
+    WHERE DATE_FORMAT(data_registro, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m');
